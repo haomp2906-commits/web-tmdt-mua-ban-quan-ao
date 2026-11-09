@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý biến thể - Rùa Fashion Store</title>
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+</head>
+
+<body class="bg-light">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/admin/dashboard}">
+            Rùa Fashion Store - Admin
+        </a>
+
+        <form th:action="@{/logout}" method="post" class="d-flex">
+            <button class="btn btn-outline-light" type="submit">
+                Đăng xuất
+            </button>
+        </form>
+    </div>
+</nav>
+
+<div class="container py-4">
+
+    <div th:if="${success}"
+         class="alert alert-success"
+         th:text="${success}">
+    </div>
+
+    <div th:if="${error}"
+         class="alert alert-danger"
+         th:text="${error}">
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <h2 class="mb-1">Quản lý biến thể sản phẩm</h2>
+
+            <p class="text-muted mb-0">
+                Sản phẩm:
+                <strong th:text="${product.name}"></strong>
+            </p>
+        </div>
+
+        <a th:href="@{/admin/products/{id}/variants/create(id=${product.id})}"
+           class="btn btn-primary">
+            Thêm biến thể
+        </a>
+    </div>
+
+    <div class="card shadow">
+        <div class="card-body">
+
+            <table class="table table-bordered table-hover align-middle">
+                <thead class="table-dark">
+                <tr>
+                    <th style="width: 80px;">ID</th>
+                    <th>Size</th>
+                    <th>Màu sắc</th>
+                    <th>Tồn kho</th>
+                    <th style="width: 180px;">Thao tác</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="variant : ${variants}">
+                    <td th:text="${variant.id}"></td>
+                    <td th:text="${variant.size.name}"></td>
+                    <td th:text="${variant.color}"></td>
+                    <td th:text="${variant.quantity}"></td>
+
+                    <td>
+                        <a th:href="@{/admin/products/{productId}/variants/edit/{variantId}
+                           (productId=${product.id}, variantId=${variant.id})}"
+                           class="btn btn-sm btn-warning">
+                            Sửa
+                        </a>
+
+                        <form th:action="@{/admin/products/{productId}/variants/delete/{variantId}
+                              (productId=${product.id}, variantId=${variant.id})}"
+                              method="post"
+                              class="d-inline">
+
+                            <button type="submit"
+                                    class="btn btn-sm btn-danger"
+                                    onclick="return confirm('Bạn có chắc muốn xóa biến thể này?')">
+                                Xóa
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+
+                <tr th:if="${#lists.isEmpty(variants)}">
+                    <td colspan="5" class="text-center text-muted">
+                        Sản phẩm này chưa có biến thể nào.
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <a th:href="@{/admin/products}"
+               class="btn btn-secondary">
+                Quay lại quản lý sản phẩm
+            </a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

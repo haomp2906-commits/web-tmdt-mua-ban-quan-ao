@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+
+    <aside th:fragment="admin-sidebar" class="admin-sidebar">
+
+        <a th:href="@{/admin/dashboard}" class="admin-brand">
+            Rùa Fashion Store
+            <span>QUẢN TRỊ</span>
+        </a>
+
+        <nav class="admin-nav">
+
+            <a th:href="@{/admin/dashboard}" class="admin-nav-link">
+                Tổng quan
+            </a>
+
+            <a th:href="@{/admin/categories}" class="admin-nav-link">
+                Quản lý danh mục
+            </a>
+
+            <a th:href="@{/admin/products}" class="admin-nav-link">
+                Quản lý sản phẩm
+            </a>
+
+            <a th:href="@{/admin/orders}" class="admin-nav-link">
+                Quản lý đơn hàng
+            </a>
+
+        </nav>
+
+        <div class="admin-sidebar-footer">
+            <small>Tài khoản quản trị</small>
+
+            <span sec:authentication="name"></span>
+        </div>
+    </aside>
+
+    <header th:fragment="admin-topbar" class="admin-topbar">
+
+        <div>
+            <p class="mb-0 fw-semibold">Trang quản trị</p>
+
+            <small class="text-muted">
+                Quản lý hoạt động của Rùa Fashion Store
+            </small>
+        </div>
+
+        <div class="d-flex align-items-center gap-3">
+
+            <a th:href="@{/home}"
+               class="btn btn-outline-secondary btn-sm">
+
+                Xem trang khách hàng
+            </a>
+
+            <form th:action="@{/logout}" method="post">
+                <button type="submit"
+                        class="btn btn-outline-danger btn-sm">
+
+                    Đăng xuất
+                </button>
+            </form>
+        </div>
+    </header>
+
+</body>
+</html>
